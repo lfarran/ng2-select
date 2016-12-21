@@ -127,13 +127,20 @@ let styles = `
         </a>
       </span>
     </div>
-    <input type="text" autocomplete="false" tabindex="-1"
+    <!-- <input type="text" autocomplete="false" tabindex="-1"
            (keydown)="inputEvent($event)"
            (keyup)="inputEvent($event, true)"
            [disabled]="disabled"
            class="form-control ui-select-search"
            *ngIf="inputMode"
-           placeholder="{{active.length <= 0 ? placeholder : ''}}">
+           placeholder="{{active.length <= 0 ? placeholder : ''}}"> -->
+     <input type="text" autocomplete="false" tabindex="-1"
+           (keydown)="inputEvent($event)"
+           (keyup)="inputEvent($event, true)"
+           [disabled]="disabled"
+           class="form-control ui-select-search"
+           *ngIf="inputMode"
+           placeholder="{{placeholder}}" readonly>
      <!-- options template -->
      <ul *ngIf="optionsOpened && options && options.length > 0 && !firstItemHasChildren"
           class="ui-select-choices dropdown-menu" role="menu">
@@ -483,13 +490,15 @@ export class SelectComponent implements OnInit {
   }
 
   private focusToInput(value:string = ''):void {
-    setTimeout(() => {
+    value = ''; // for tslint
+    // TODO: LBF 12/20/16
+    /*setTimeout(() => {
       let el = this.element.nativeElement.querySelector('div.ui-select-container > input');
       if (el) {
         el.focus();
         el.value = value;
       }
-    }, 0);
+    }, 0);*/
   }
 
   private open():void {
@@ -532,9 +541,11 @@ export class SelectComponent implements OnInit {
     this.hideOptions();
     if (this.multiple === true) {
       this.focusToInput('');
-    } else {
+    }
+    // TODO: LBF 12/20/16 - remove active
+    /*else {
       this.focusToInput(stripTags(value.text));
-      this.element.nativeElement.querySelector('.ui-select-container').focus();
+      this.element.nativeElement.querySelector('.ui-select-container').focus();*/
     }
   }
 }
