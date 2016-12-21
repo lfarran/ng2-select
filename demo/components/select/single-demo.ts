@@ -19,6 +19,8 @@ export class SingleDemoComponent {
     'The Hague', 'Turin', 'Valencia', 'Vienna', 'Vilnius', 'Warsaw', 'Wrocław',
     'Zagreb', 'Zaragoza', 'Łódź'];
 
+  public previousValue: any;
+
   private value:Array<any> = [{text: 'Nothing Selected'}];
   private _disabledV:string = '0';
   private disabled:boolean = false;
@@ -41,18 +43,25 @@ export class SingleDemoComponent {
   }
 
   public selected(value:any):void {
-    console.log('Selected value is: ', value);
+    console.log('Demo Selected value is: ', value);
   }
 
   public removed(value:any):void {
-    console.log('Removed value is: ', value);
+    console.log('Demo Removed value is: ', value);
   }
 
   public typed(value:any):void {
-    console.log('New search input: ', value);
+    console.log('Demo New search input: ', value);
   }
 
   public refreshValue(value:any):void {
+    console.log('Demo refreshValue:', value);
+    this.previousValue = this.value[0];
     this.value[0] = value;
+  }
+
+  // TODO: LBF 12/20/16
+  public resetValue(): void {
+    this.value[0] = this.previousValue;
   }
 }

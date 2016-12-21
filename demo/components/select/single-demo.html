@@ -7,6 +7,7 @@
               (selected)="selected($event)"
               (removed)="removed($event)"
               (typed)="typed($event)"
+              [active]="value"
               [placeholder]="placeholderText">
   </ng-select>
   <p></p>
@@ -18,5 +19,6 @@
             btnCheckboxTrue="1" btnCheckboxFalse="0">
       {{disabled === '1' ? 'Enable' : 'Disable'}}
     </button>
+    <button (click)="resetValue()" class="btn btn-default">Reset To Previous Value</button>
   </div>
 </div>

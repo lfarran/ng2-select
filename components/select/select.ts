@@ -287,6 +287,7 @@ export class SelectComponent implements OnInit {
 
   @Input()
   public set active(selectedItems:Array<any>) {
+    console.log('ng2-selct set active:', selectedItems);
     if (!selectedItems || selectedItems.length === 0) {
       this._active = [];
     } else {
