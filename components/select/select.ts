@@ -59,12 +59,13 @@ let styles = `
       line-height: 1.42857143;
       color: #333;
       white-space: nowrap;
+      font-size: 12px;
   }
   .ui-select-choices-row.active>a {
       color: #fff;
       text-decoration: none;
       outline: 0;
-      background-color: #428bca;
+      background-color: #00a0df;
   }
   
   .ui-select-multiple {
@@ -103,6 +104,7 @@ let styles = `
 @Component({
   selector: 'ng-select',
   styles: [styles],
+
   template: `
   <div tabindex="0"
      *ngIf="multiple === false"
@@ -116,7 +118,7 @@ let styles = `
           class="btn btn-default btn-secondary form-control ui-select-toggle"
           (click)="matchClick($event)"
           style="outline: 0;">
-        <span *ngIf="active.length <= 0" class="ui-select-placeholder text-muted">{{placeholder}}</span>
+        <span *ngIf="active.length <= 0" class="ui-select-placeholder text-muted">{{_placeholder}}</span>
         <span *ngIf="active.length > 0" class="ui-select-match-text pull-left"
               [ngClass]="{'ui-select-allow-clear': allowClear && active.length > 0}"
               [innerHTML]="sanitize(active[0].text)"></span>
@@ -127,13 +129,6 @@ let styles = `
         </a>
       </span>
     </div>
-    <!-- <input type="text" autocomplete="false" tabindex="-1"
-           (keydown)="inputEvent($event)"
-           (keyup)="inputEvent($event, true)"
-           [disabled]="disabled"
-           class="form-control ui-select-search"
-           *ngIf="inputMode"
-           placeholder="{{active.length <= 0 ? placeholder : ''}}"> -->
      <input type="text" autocomplete="false" tabindex="-1"
            (keydown)="inputEvent($event)"
            (keyup)="inputEvent($event, true)"
@@ -196,7 +191,7 @@ let styles = `
            </span>
         </span>
     </span>
-    <input type="text"
+     <input type="text"
            (keydown)="inputEvent($event)"
            (keyup)="inputEvent($event, true)"
            (click)="matchClick($event)"
@@ -206,7 +201,7 @@ let styles = `
            autocapitalize="off"
            spellcheck="false"
            class="form-control ui-select-search"
-           placeholder="{{active.length <= 0 ? placeholder : ''}}"
+           placeholder="{{_placeholder}}"
            role="combobox">
      <!-- options template -->
      <ul *ngIf="optionsOpened && options && options.length > 0 && !firstItemHasChildren"
@@ -246,14 +241,12 @@ let styles = `
 })
 export class SelectComponent implements OnInit {
   @Input() public allowClear:boolean = false;
-  // @Input() public placeholder:string = '';  // TODO: LBF 12/20/16
   @Input() public idField:string = 'id';
   @Input() public textField:string = 'text';
   @Input() public multiple:boolean = false;
 
-  // TODO: LBF 12/20/16
   @Input()
-  public set placeholder(value: string): void {
+  public set placeholder(value: string) {
     this._placeholder = value;
   }
 
@@ -287,7 +280,6 @@ export class SelectComponent implements OnInit {
 
   @Input()
   public set active(selectedItems:Array<any>) {
-    console.log('ng2-selct set active:', selectedItems);
     if (!selectedItems || selectedItems.length === 0) {
       this._active = [];
     } else {
@@ -331,10 +323,20 @@ export class SelectComponent implements OnInit {
     this.clickedOutside = this.clickedOutside.bind(this);
   }
 
+  /**
+   *
+   * @param html
+   * @returns {SafeHtml}
+   */
   public sanitize(html:string):SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
+  /**
+   *
+   * @param e
+   * @param isUpMode
+   */
   public inputEvent(e:any, isUpMode:boolean = false):void {
     // tab
     if (e.keyCode === 9) {
@@ -498,8 +500,8 @@ export class SelectComponent implements OnInit {
   }
 
   private focusToInput(value:string = ''):void {
-    value = ''; // for tslint
-    // TODO: LBF 12/20/16
+    value = ''; // for tslint workaround
+    // LBF 12/20/16 - disable styling
     /*setTimeout(() => {
       let el = this.element.nativeElement.querySelector('div.ui-select-container > input');
       if (el) {
@@ -542,6 +544,7 @@ export class SelectComponent implements OnInit {
       this.data.next(this.active);
     }
     if (this.multiple === false) {
+      console.log('ng2-selct selectMatch:', value);
       this.active[0] = value;
       this.data.next(this.active[0]);
     }
@@ -550,11 +553,11 @@ export class SelectComponent implements OnInit {
     if (this.multiple === true) {
       this.focusToInput('');
     }
-    // TODO: LBF 12/20/16 - remove active
+    // LBF 12/20/16 - remove active styling
     /*else {
       this.focusToInput(stripTags(value.text));
-      this.element.nativeElement.querySelector('.ui-select-container').focus();*/
-    }
+      this.element.nativeElement.querySelector('.ui-select-container').focus();
+    }*/
   }
 }
 

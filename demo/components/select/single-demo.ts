@@ -20,6 +20,7 @@ export class SingleDemoComponent {
     'Zagreb', 'Zaragoza', 'Łódź'];
 
   public previousValue: any;
+  public formActive: boolean = true;
 
   private value:Array<any> = [{text: 'Nothing Selected'}];
   private _disabledV:string = '0';
@@ -31,6 +32,11 @@ export class SingleDemoComponent {
    */
   public get placeholderText(): string {
     return this.value[0]  ? this.value[0].text : '';
+  }
+
+  public getValue(): Array<any> {
+    console.log('getValue:', this.value[0].text);
+    return this.value;
   }
 
   private get disabledV():string {
@@ -62,6 +68,13 @@ export class SingleDemoComponent {
 
   // TODO: LBF 12/20/16
   public resetValue(): void {
-    this.value[0] = this.previousValue;
+    this.formActive = false;
+    setTimeout(() => {
+      this.value[0] = this.previousValue;
+      console.info('demo refreshValue():', this.value[0]);
+      this.selected(this.value[0]);
+    }, 0);
+
+    this.formActive = true;
   }
 }

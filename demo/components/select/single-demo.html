@@ -1,14 +1,13 @@
 <div style="width: 300px; margin-bottom: 20px;">
   <h3>Select a single city</h3>
-  <ng-select [allowClear]="true"
-              [items]="items"
-              [disabled]="disabled"
-              (data)="refreshValue($event)"
-              (selected)="selected($event)"
-              (removed)="removed($event)"
-              (typed)="typed($event)"
-              [active]="value"
-              [placeholder]="placeholderText">
+  <ng-select [items]="items"
+             [disabled]="disabled"
+             (data)="refreshValue($event)"
+             (selected)="selected($event)"
+             (removed)="removed($event)"
+             (typed)="typed($event)"
+
+             [placeholder]="placeholderText" *ngIf="formActive">
   </ng-select>
   <p></p>
   <pre>Value: {{value[0].text}}</pre>
