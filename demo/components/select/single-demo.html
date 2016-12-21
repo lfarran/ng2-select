@@ -7,10 +7,11 @@
               (selected)="selected($event)"
               (removed)="removed($event)"
               (typed)="typed($event)"
-              placeholder="No city selected">
+              [placeholder]="placeholderText">
   </ng-select>
   <p></p>
-  <pre>{{value.text}}</pre>
+  <pre>Value: {{value[0].text}}</pre>
+  <pre>Placeholder: {{placeholderText}}</pre>
   <div>
     <button type="button" class="btn btn-primary"
             [(ngModel)]="disabledV" btnCheckbox

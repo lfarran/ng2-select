@@ -19,9 +19,17 @@ export class SingleDemoComponent {
     'The Hague', 'Turin', 'Valencia', 'Vienna', 'Vilnius', 'Warsaw', 'Wrocław',
     'Zagreb', 'Zaragoza', 'Łódź'];
 
-  private value:any = {};
+  private value:Array<any> = [{text: 'Nothing Selected'}];
   private _disabledV:string = '0';
   private disabled:boolean = false;
+
+  /**
+   * TODO: LBF 12/20/16
+   * @returns {string}
+   */
+  public get placeholderText(): string {
+    return this.value[0]  ? this.value[0].text : '';
+  }
 
   private get disabledV():string {
     return this._disabledV;
@@ -45,6 +53,6 @@ export class SingleDemoComponent {
   }
 
   public refreshValue(value:any):void {
-    this.value = value;
+    this.value[0] = value;
   }
 }

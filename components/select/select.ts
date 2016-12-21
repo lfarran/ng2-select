@@ -140,7 +140,7 @@ let styles = `
            [disabled]="disabled"
            class="form-control ui-select-search"
            *ngIf="inputMode"
-           placeholder="{{placeholder}}" readonly>
+           placeholder="{{_placeholder}}" readonly>
      <!-- options template -->
      <ul *ngIf="optionsOpened && options && options.length > 0 && !firstItemHasChildren"
           class="ui-select-choices dropdown-menu" role="menu">
@@ -246,10 +246,16 @@ let styles = `
 })
 export class SelectComponent implements OnInit {
   @Input() public allowClear:boolean = false;
-  @Input() public placeholder:string = '';
+  // @Input() public placeholder:string = '';  // TODO: LBF 12/20/16
   @Input() public idField:string = 'id';
   @Input() public textField:string = 'text';
   @Input() public multiple:boolean = false;
+
+  // TODO: LBF 12/20/16
+  @Input()
+  public set placeholder(value: string): void {
+    this._placeholder = value;
+  }
 
   @Input()
   public set items(value:Array<any>) {
@@ -315,6 +321,7 @@ export class SelectComponent implements OnInit {
   private behavior:OptionsBehavior;
   private inputValue:string = '';
   private _items:Array<any> = [];
+  private _placeholder: string = '';
   private _disabled:boolean = false;
   private _active:Array<SelectItem> = [];
 
